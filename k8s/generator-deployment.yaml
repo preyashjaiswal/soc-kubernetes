@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: soc-generator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: soc-generator
+  template:
+    metadata:
+      labels:
+        app: soc-generator
+    spec:
+      containers:
+      - name: generator
+        image: soc-generator:local
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: REDIS_URL
+          value: "redis://message-broker:6379"

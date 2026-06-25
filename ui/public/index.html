@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microservice SOC Console</title>
+    <style>
+        body { background-color: #0b0f19; color: #00ff66; font-family: monospace; padding: 30px; margin: 0; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #00ff66; padding-bottom: 10px; margin-bottom: 25px; }
+        h1 { margin: 0; font-size: 20px; text-shadow: 0 0 5px #00ff66; }
+        .badge-status { background: #00ff66; color: #0b0f19; padding: 4px 8px; font-weight: bold; border-radius: 3px; font-size: 12px; }
+        .feed-box { background: #111625; border: 1px solid #00ff66; border-radius: 4px; padding: 20px; box-shadow: 0 0 15px rgba(0,255,102,0.05); }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #1a233a; font-size: 13px; }
+        th { color: #8892b0; font-weight: bold; }
+        .alert-row { color: #ff3333; animation: flash 0.5s ease-out; }
+        @keyframes flash { from { background: rgba(255,51,51,0.2); } to { background: transparent; } }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>[SYSTEM STATUS: DECENTRALIZED SOC MICROSERVICES RUNNING]</h1>
+        <div class="badge-status">CLUSTER ACTIVE</div>
+    </div>
+    <div class="feed-box">
+        <strong style="font-size: 15px;">CRITICAL SIEM THREAT INTRUSIONS LOG</strong>
+        <table>
+            <thead>
+                <tr>
+                    <th>TIMESTAMP</th>
+                    <th>ALERT ID</th>
+                    <th>THREAT VECTOR DETECTED</th>
+                    <th>SOURCE ATTACKER IP</th>
+                    <th>SERVICE ORIGIN</th>
+                </tr>
+            </thead>
+            <tbody id="logs">
+                <tr><td colspan="5" style="color:#8892b0; text-align:center;">Establishing telemetry stream tunnel...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        async function fetchMicroserviceAlerts() {
+            try {
+                const res = await fetch('/api/alerts');
+                const alerts = await res.json();
+                const tbody = document.getElementById('logs');
+                if(alerts.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" style="color:#8892b0; text-align:center;">Listening for incoming network attacks...</td></tr>`;
+                    return;
+                }
+                tbody.innerHTML = '';
+                alerts.forEach(a => {
+                    tbody.innerHTML += `
+                        <tr class="alert-row">
+                            <td>${a.timestamp}</td>
+                            <td>#${a.id}</td>
+                            <td><strong>${a.event}</strong></td>
+                            <td>${a.ip}</td>
+                            <td>${a.source}</td>
+                        </tr>`;
+                });
+            } catch(e) { console.error("UI link broken to Analyzer Engine", e); }
+        }
+        setInterval(fetchMicroserviceAlerts, 2000);
+        fetchMicroserviceAlerts();
+    </script>
+</body>
+</html>

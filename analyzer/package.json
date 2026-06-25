@@ -1,0 +1,6 @@
+{
+  "name": "soc-analyzer",
+  "version": "1.0.0",
+  "main": "analyzer.js",
+  "dependencies": { "express": "^4.19.2", "redis": "^4.6.13" }
+}

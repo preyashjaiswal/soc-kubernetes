@@ -1,0 +1,6 @@
+{
+  "name": "soc-generator",
+  "version": "1.0.0",
+  "main": "generator.js",
+  "dependencies": { "redis": "^4.6.13" }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "soc-ui",
+  "version": "1.0.0",
+  "main": "ui.js",
+  "dependencies": { "express": "^4.19.2" }
+}
